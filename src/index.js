@@ -1,0 +1,1 @@
+ReactDOM.render(<App searchRiot={window.searchRiot} />, document.getElementById('app'));
