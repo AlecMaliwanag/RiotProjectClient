@@ -1,0 +1,1 @@
+window.RIOT_API_KEY = 'api_key=4a99a25b-dd7e-4698-8256-9b3b773fa3ed';

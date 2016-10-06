@@ -34,6 +34,7 @@ var searchRiot = (options, callback) => {
     success: function(data) {
       var trimmedData = dataCleaner(data.games);
       callback(trimmedData);
+      console.log('hi')
     },
     error: function(error) {
       console.log("error: " + error);

@@ -1,4 +1,6 @@
 class App extends React.Component {
+
+  //=================================**INIT FUNCTIONALITY**==================================
   constructor(props) {
     super(props);
 
@@ -8,9 +10,27 @@ class App extends React.Component {
     }
   }
 
-  //=================================**RENDER FUNCTIONALITY**==================================
+  componentDidMount() {
+    var options = {
+      max: 10,
+      key: window.RIOT_API_KEY
+    };
+    this.props.searchRiot(options, (data) => { 
+      this.setState({
+        currentGame: data[0],
+        gameList: data
+      });
+    });
+  }
+
+  //=================================**GAME LIST FUNCTIONALITY**==================================
   
-  
+  onGameListClick(game) {
+    // $('html, body').animate({ scrollTop: 0 }, 'fast');
+    this.setState({
+      currentGame: game
+    });
+  }
 
 
   //=================================**SEARCH BAR FUNCTIONALITY**==================================
@@ -45,9 +65,12 @@ class App extends React.Component {
               <FeatureGame game={this.state.currentGame}/>
             </div>
             <div className="col-md-6">
-              <GameList onClick={this.onGameListClick.bind(this)} videos={this.state.gameList}/>
+              <GameList onClickFunc={this.onGameListClick.bind(this)} games={this.state.gameList}/>
             </div>
           </div>
       </div>
     );
+  }
 }
+
+window.App = App;
