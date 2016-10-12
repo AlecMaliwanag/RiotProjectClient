@@ -3,8 +3,8 @@ var GameListEntry = (props) => (
     <div className="media-left media-middle">
     </div>
     <div className="media-body">
-      <div onClick={props.onClickFunc.bind(null, props.game)} className="game-list-entry-title">some game title</div>
-      <div className="game-list-entry-detail">game description</div>
+      <div onClick={props.onClickFunc.bind(null, props.game)} className="game-list-entry-title">{props.game.date}</div>
+      <div className="game-list-entry-detail">K/D/A: {props.game['Kills']}/{props.game['Deaths']}/{props.game['Assists']}</div>
     </div>
   </div>
 );

@@ -1,13 +1,12 @@
 var GameList = (props) => {
-  console.log(props, "gameList props")
   return (
-  <div className="game-list media">
-  {
-    props.games.map((game) => <GameListEntry onClickFunc={props.onClickFunc} game={game}/>)
-  }
-  </div>
-);
-}
+    <div className="game-list media">
+    {
+      props.games.map((game, index) => <GameListEntry onClickFunc={props.onClickFunc} game={game} index={index + 1}/>)
+    }
+    </div>
+  );
+};
 
 // PropTypes tell other developers what `props` a component expects
 // Warnings will be shown in the console when the defined rules are violated

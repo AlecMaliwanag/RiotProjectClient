@@ -1,4 +1,4 @@
-var champData = {  
+window.champData = {  
    "data":{  
       "89":{  
          "id":89,

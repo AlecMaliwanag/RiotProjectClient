@@ -5,54 +5,65 @@ class App extends React.Component {
     super(props);
 
     this.state = {
-      currentGame: window.exampleGameData[0],
-      gameList: window.exampleGameData
-    }
+      currentGame: {},
+      gameList: []
+    };
   }
 
   componentDidMount() {
-    var options = {
-      max: 10,
-      key: window.RIOT_API_KEY
-    };
-    this.props.searchRiot(options, (data) => { 
-      this.setState({
-        currentGame: data[0],
-        gameList: data
-      });
-    });
+    // var options = {
+    //   summoner: 'LeChunky',
+    //   key: window.RIOT_API_KEY
+    // };
+    // this.props.searchRiot(options, (data) => { 
+    //   this.setState({
+    //     currentGame: data[0],
+    //     gameList: data
+    //   });
+    // });
   }
 
   //=================================**GAME LIST FUNCTIONALITY**==================================
   
   onGameListClick(game) {
-    // $('html, body').animate({ scrollTop: 0 }, 'fast');
+    $('html, body').animate({ scrollTop: 0 }, 'fast');
     this.setState({
       currentGame: game
     });
   }
 
 
-  //=================================**SEARCH BAR FUNCTIONALITY**==================================
+  //=================================**SUMMONER SEARCH BAR FUNCTIONALITY**==================================
 
   onSearchButtonClick(event) {
     var options = {
-      query: event.target.closest('div').getElementsByTagName('input')[0].value,
-      max: 10,
+      summoner: event.target.closest('div').getElementsByTagName('input')[0].value,
       key: window.RIOT_API_KEY
     };
-    this.props.searchRiot(options, (data) => { this.set(data); }); 
+    this.props.searchRiot(options, (data) => { this.setState({ currentGame: data[0], gameList: data }); });
+    event.target.closest('div').getElementsByTagName('input')[0].value = '';
   }
 
   onSearchButtonEnter(event) {
     if (event.keyCode === 13) {
       var options = {
-        query: event.target.closest('div').getElementsByTagName('input')[0].value,
-        max: 10,
+        summoner: event.target.closest('div').getElementsByTagName('input')[0].value,
         key: window.RIOT_API_KEY
       };
-      this.props.searchRiot(options, (data) => { this.set(data); }); 
+      this.props.searchRiot(options, (data) => { this.setState({ currentGame: data[0], gameList: data }); }); 
+      event.target.closest('div').getElementsByTagName('input')[0].value = '';
     }
+  }
+
+  displayStatsFunc(game) {
+    var display = [];
+    for (var stat in game) {
+      if (stat === 'date') {
+        break;
+      }
+      display.push(stat + ': ' + game[stat]);
+    }
+    return display;
   }
 
   //=================================**RENDER FUNCTIONALITY**==================================
@@ -62,7 +73,7 @@ class App extends React.Component {
         <Navbar onClickFunc={this.onSearchButtonClick.bind(this)} onEnterFunc={this.onSearchButtonEnter.bind(this)}/>
           <div className="row container-fluid">
             <div className="col-md-6">
-              <FeatureGame game={this.state.currentGame}/>
+              <FeatureGame game={this.state.currentGame} statistics={this.displayStatsFunc(this.state.currentGame)}/>
             </div>
             <div className="col-md-6">
               <GameList onClickFunc={this.onGameListClick.bind(this)} games={this.state.gameList}/>
